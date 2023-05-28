@@ -18,10 +18,9 @@ async function bootstrap() {
     options: {
       package: 'product', // 연결할 proto 패키지
       credentials: ServerCredentials.createInsecure(), //서버자격증명
-      protoPath: join(
+      protoPath:
         // 파일의 절대 경로
-        'C:/Users/LAVARWAVE/Desktop/nx-workspace/nx-workspace/packages/apps/market/api/src/proto/product.proto'
-      ),
+        'C:/Users/LAVARWAVE/Desktop/nx-workspace/nx-workspace/packages/apps/market/api/src/proto/product.proto',
     },
   });
   app.useGlobalPipes(
