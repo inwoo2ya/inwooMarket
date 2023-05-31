@@ -3,15 +3,16 @@ import {
   GrpcMethod,
   GrpcStreamMethod,
 } from '@nestjs/microservices';
-import { ProductById } from '../../../interface/ProductInterface';
-import { Product } from '../entities/product.entity';
+import { ProductById } from 'packages/proto/product';
+import { Product } from 'packages/entity/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateProductDto } from '../dto/createProduct.dto';
+import { CreateProductDto } from '../../../../../../product/src/app/dto/createProduct.dto';
 import { Observable, Subject } from 'rxjs';
-import { Inject, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { ProductClientController } from '../app.client.controller';
 
+@Injectable()
 export class GrpcService implements OnModuleInit {
   private productController: ProductClientController;
   constructor(
@@ -32,28 +33,28 @@ export class GrpcService implements OnModuleInit {
       },
     });
   }
-  @GrpcMethod('ProductService')
-  createProduct(data: CreateProductDto): Observable<Product> {
-    // return this.ProductRepository.create(data);
-    return;
-  }
-  @GrpcStreamMethod('ProductService')
-  findMany(data$: Observable<ProductById>): Observable<Product> {
-    const product$ = new Subject<Product>();
-    const onNext = async (data$: ProductById) => {
-      const item = await this.ProductRepository.findOne({
-        where: {
-          id: data$.id,
-        },
-      });
-      console.log(item);
-      product$.next(item);
-    };
-    const onComplete = () => product$.complete();
-    data$.subscribe({
-      next: onNext,
-      complete: onComplete,
-    });
-    return product$.asObservable();
-  }
+  // @GrpcMethod('ProductService')
+  // createProduct(data: CreateProductDto): Observable<Product> {
+  //   // return this.ProductRepository.create(data);
+  //   return;
+  // }
+  // @GrpcStreamMethod('ProductService')
+  // findMany(data$: Observable<ProductById>): Observable<Product> {
+  //   const product$ = new Subject<Product>();
+  //   const onNext = async (data$: ProductById) => {
+  //     const item = await this.ProductRepository.findOne({
+  //       where: {
+  //         id: data$.id,
+  //       },
+  //     });
+  //     console.log(item);
+  //     product$.next(item);
+  //   };
+  //   const onComplete = () => product$.complete();
+  //   data$.subscribe({
+  //     next: onNext,
+  //     complete: onComplete,
+  //   });
+  //   return product$.asObservable();
+  // }
 }

@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { join } from 'path';
-import { ProductClientModule } from './client/app.client.module';
-import { ProductClientController } from './client/app.client.controller';
+import { ProductController } from './product.controller';
+import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from '../../../../../entity/product.entity';
+import { Product } from 'packages/entity/product.entity';
 
 @Module({
   imports: [
@@ -19,7 +17,8 @@ import { Product } from '../../../../../entity/product.entity';
       entities: [Product],
       synchronize: true,
     }),
-    ProductClientModule,
   ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
