@@ -20,7 +20,7 @@ async function bootstrap() {
       credentials: ServerCredentials.createInsecure(), //서버자격증명
       protoPath:
         // 파일의 절대 경로
-        'C:/Users/LAVARWAVE/Desktop/nx-workspace/nx-workspace/packages/apps/market/api/src/proto/product.proto',
+        'packages/apps/global/proto/product.proto',
     },
   });
   app.useGlobalPipes(
@@ -32,10 +32,8 @@ async function bootstrap() {
       },
     })
   );
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
   // const globalPrefix = 'api';
-
-  await app.startAllMicroservices();
-  await app.listen(3333);
-  console.log('applictaion is running on %d', 3333);
 }
 bootstrap();

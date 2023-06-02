@@ -1,12 +1,7 @@
 import { Module } from '@nestjs/common';
-
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { join } from 'path';
-import { ProductClientModule } from './client/app.client.module';
-import { ProductClientController } from './client/app.client.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from 'packages/entity/product.entity';
-
+import { Product } from 'packages/apps/global/entity/product.entity';
+import { ProductController } from './product.controller';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -19,7 +14,9 @@ import { Product } from 'packages/entity/product.entity';
       entities: [Product],
       synchronize: true,
     }),
-    ProductClientModule,
+    TypeOrmModule.forFeature([Product]),
   ],
+  controllers: [ProductController],
+  providers: [ProductController],
 })
-export class AppModule {}
+export class ProductModule {}

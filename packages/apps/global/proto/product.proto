@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package product;
+
+service ProductService {
+	rpc CreateProduct (Product) returns (Product) {};
+	rpc FindOne (ProductById) returns (Product) {};
+	rpc ProductManagement (ProductCount) returns (ProductCount) {};
+	rpc FindMany (stream ProductById) returns (stream Product) {};
+}
+
+message ProductById {
+	int32 id = 1;
+}
+
+message Product {
+	int32 id = 1;
+	string name = 2;
+	int32 count = 3;
+	int32 price = 4;
+}
+message AddProduct {
+	string namse =1;
+	int32 price = 2;
+}
+message ProductCount {
+	string name = 1;
+	int32 count = 2;
+}
+

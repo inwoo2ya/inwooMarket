@@ -10,22 +10,11 @@ import {
 import { Observable, ReplaySubject, Subject, toArray } from 'rxjs';
 import { ClientGrpc, RpcException } from '@nestjs/microservices';
 import { ProductById } from '../../interface/ProductInterface';
-import { Product } from './entities/product.entity';
+import { Product } from '../../../../../global/entity/product.entity';
 import { Repository } from 'typeorm';
-import { CreateProductDto } from './dto/createProduct.dto';
+import { CreateProductDto } from '../../../../../product/src/app/dto/createProduct.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GrpcService } from './grpc/grpcMethod.service';
-
-export interface ProductService {
-  findOne(data: ProductById): Observable<any>;
-  createProduct(data: {
-    id: number;
-    name: string;
-    count: number;
-    price: number;
-  });
-  findMany(upstream: Observable<ProductById>): Observable<Product>;
-}
 
 @Controller('product')
 export class ProductClientController {
