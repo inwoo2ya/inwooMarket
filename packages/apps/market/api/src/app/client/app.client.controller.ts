@@ -10,7 +10,7 @@ import {
 import { Observable, ReplaySubject, Subject, toArray } from 'rxjs';
 import { ClientGrpc, RpcException } from '@nestjs/microservices';
 import { ProductById } from '../../interface/ProductInterface';
-import { Product } from '../../../../../../entity/product.entity';
+import { Product } from '../../../../../global/entity/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from '../../../../../product/src/app/dto/createProduct.dto';
 import { InjectRepository } from '@nestjs/typeorm';

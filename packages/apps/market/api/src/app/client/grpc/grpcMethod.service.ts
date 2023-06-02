@@ -3,8 +3,8 @@ import {
   GrpcMethod,
   GrpcStreamMethod,
 } from '@nestjs/microservices';
-import { ProductById } from 'packages/proto/product';
-import { Product } from 'packages/entity/product.entity';
+import { ProductById } from '@Back-global';
+import { ProductEntity } from 'packages/entity/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from '../../../../../../product/src/app/dto/createProduct.dto';

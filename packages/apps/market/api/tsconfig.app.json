@@ -11,6 +11,6 @@
   "include": [
     "src/**/*.ts",
     "../../product/src/app/dto/createProduct.dto.ts",
-    "../../../entity/product.entity.ts"
+    "../../global/entity/product.entity.ts"
   ]
 }

@@ -4,26 +4,27 @@ import {
   GrpcMethod,
   GrpcStreamMethod,
 } from '@nestjs/microservices';
-import { Product } from 'packages/entity/product.entity';
 import {
   AddProduct,
+  Product,
   ProductById,
+  ProductServiceClient,
   ProductServiceController,
-} from 'packages/proto/product';
+} from 'packages/apps/global/proto/product';
 import { Observable, Subject } from 'rxjs';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AppService implements OnModuleInit {
-  private productService: ProductServiceController;
+  private productService: ProductServiceClient;
+
   constructor(@Inject('PRODUCT_PACKAGE') private client: ClientGrpc) {}
-  onModuleInit(): any {
+  onModuleInit() {
     this.productService =
-      this.client.getService<ProductServiceController>('ProductService');
+      this.client.getService<ProductServiceClient>('ProductService');
   }
   //findOne 자동연결
-  findOne(data: ProductById): Promise<Product> | Observable<Product> | Product {
-    return this.productService.findOne({ id: data.id });
+  findOne(id: number): Observable<Product> {
+    console.log(3, id);
+    return this.productService.findOne({ id });
   }
 }

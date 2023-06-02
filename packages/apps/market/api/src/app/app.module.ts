@@ -5,7 +5,7 @@ import { join } from 'path';
 import { ProductClientModule } from './client/app.client.module';
 import { ProductClientController } from './client/app.client.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from '../../../../../entity/product.entity';
+import { Product } from 'packages/entity/product.entity';
 
 @Module({
   imports: [

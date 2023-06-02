@@ -1,0 +1,41 @@
+1.nx모노레포를 생성한다.
+$ npx create-nx-workspace@latest [워크스페이스 제목] --preset=ts
+
+2. nx설정을 변경한다.
+// nx.json
+{
+	"workspaceLayout" : {
+		"appsDir" : "packages/apps" ,
+		"libsDir" : "packages/libs"
+	}
+}
+
+3. nest,next 설치한다.
+$ npm i -D @nx/nest @nx/next
+최신 버전: @nx 구 버전: @nrwl
+
+4. package(app) 생성
+$ nx g @nx/next:app [서비스명/폴더] ex) demo/web , demo/api
+
+5. 라이브러리 생성
+$ nx g @nx/js:lib common/entities --name=[] --publishable --importPath=[파일경로]
+
+6. 실행 및 빌드
+- 여러개 실행
+$ nx run-many --target=[목적:serve,test...] --projects=[서비스명],[서비스명2],...
+- 하나 실행
+$ nx run [서비스명]:[실행]
+or
+$ nx [실행: serve,test...] [서비스명]
+
+MSA & BFF 패턴 (nestJs ver)
+
+1. grpc 설치
+$ npm i @grpc/grpc-js @grpc/proto-loader
+
+2. ts-proto 라이브러리 설치
+$ npm i ts-proto
+
+3. ts-proto 설정
+$ npx protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto.cmd --ts_proto_opt=nestJs=true --ts_proto_out=./[프로토파일 경로]
+ => .proto 파일 .ts파일로 생성

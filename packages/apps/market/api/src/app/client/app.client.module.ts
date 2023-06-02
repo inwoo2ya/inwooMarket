@@ -3,7 +3,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 
 import { ProductClientController } from './app.client.controller';
-import { Product } from '../../../../../../entity/product.entity';
+import { Product } from '../../../../../global/entity/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GrpcService } from './grpc/grpcMethod.service';
 

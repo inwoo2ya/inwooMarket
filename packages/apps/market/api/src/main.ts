@@ -20,7 +20,7 @@ async function bootstrap() {
       credentials: ServerCredentials.createInsecure(), //서버자격증명
       protoPath:
         // 파일의 절대 경로
-        'packages/proto/product.proto',
+        'packages/apps/global/proto/product.proto',
     },
   });
   app.useGlobalPipes(

@@ -6,12 +6,12 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ServerCredentials } from '@grpc/grpc-js';
-import { AppModule } from './app/app.module';
+import { ProductModule } from './app/app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AppModule,
+    ProductModule,
     {
       transport: Transport.GRPC, //grpc 전송기 설정
       options: {
@@ -19,7 +19,7 @@ async function bootstrap() {
         credentials: ServerCredentials.createInsecure(), //서버자격증명
         protoPath:
           // 파일의 절대 경로
-          'packages/proto/product.proto',
+          'packages/apps/global/proto/product.proto',
       },
     }
   );
