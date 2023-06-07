@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from 'packages/apps/global/entity/product.entity';
+
 import { ProductController } from './product.controller';
+import { ProductRepository } from 'packages/apps/global/decorator/customRepository/custom.repository';
+import { Product } from 'packages/apps/global/entity/product.entity';
+import { TypeOrmExModule } from 'packages/apps/global/decorator/customRepository/typeOrmEx.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -15,6 +18,7 @@ import { ProductController } from './product.controller';
       synchronize: true,
     }),
     TypeOrmModule.forFeature([Product]),
+    // TypeOrmExModule.forCustomRepository([ProductRepository]),
   ],
   controllers: [ProductController],
   providers: [ProductController],

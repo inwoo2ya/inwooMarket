@@ -29,7 +29,7 @@ or
 $ nx [실행: serve,test...] [서비스명]
 
 MSA & BFF 패턴 (nestJs ver)
-
+자세한 내용은 https://docs.nestjs.com/microservices/grpc
 1. grpc 설치
 $ npm i @grpc/grpc-js @grpc/proto-loader
 
