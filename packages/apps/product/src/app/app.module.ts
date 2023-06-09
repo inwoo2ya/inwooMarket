@@ -5,6 +5,7 @@ import { ProductController } from './product.controller';
 import { ProductRepository } from 'packages/apps/global/decorator/customRepository/custom.repository';
 import { Product } from 'packages/apps/global/entity/product.entity';
 import { TypeOrmExModule } from 'packages/apps/global/decorator/customRepository/typeOrmEx.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({

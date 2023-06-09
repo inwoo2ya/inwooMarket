@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CqrsModule } from '@nestjs/cqrs';
+import { RegisterProductHandler } from '../cqrs/commands/handlers/register-product.handler';
+import { RemoveProductHandler } from '../cqrs/commands/handlers/remove-product.handler';
+import { ModificationProductHandler } from '../cqrs/commands/handlers/modification-product.handler';
 
 @Module({
   imports: [
@@ -20,6 +23,10 @@ import { CqrsModule } from '@nestjs/cqrs';
     ]),
   ],
   controllers: [AppController],
-  providers: [AppController],
+  providers: [
+    RegisterProductHandler,
+    RemoveProductHandler,
+    ModificationProductHandler,
+  ],
 })
 export class AppModule {}

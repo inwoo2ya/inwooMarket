@@ -5,8 +5,9 @@ package product;
 service ProductService {
 	rpc CreateProduct (Product) returns (Product) {};
 	rpc FindOne (ProductById) returns (Product) {};
-	rpc ProductManagement (ProductCount) returns (ProductCount) {};
+	rpc UpdateProduct (Product) returns (Product) {};
 	rpc FindMany (stream ProductById) returns (stream Product) {};
+	rpc RemoveProduct (ProductById) returns (DeleteProduct) {};
 }
 
 message ProductById {
@@ -20,11 +21,15 @@ message Product {
 	int32 price = 4;
 }
 message AddProduct {
-	string namse =1;
-	int32 price = 2;
+	int32 id = 1;
+	string name =2;
+	int32 price = 3;
 }
 message ProductCount {
-	string name = 1;
-	int32 count = 2;
+	int32 id = 1;
+	int32 count = 3;
 }
-
+message DeleteProduct{
+	int32 id =1;
+	string name = 2;
+}

@@ -1,23 +1,17 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Inject,
-  Injectable,
-  Param,
-  Post,
-} from '@nestjs/common';
-import {
-  ClientGrpc,
-  GrpcMethod,
-  GrpcStreamMethod,
-} from '@nestjs/microservices';
+import { GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'packages/apps/global/entity/product.entity';
-import { AddProduct, ProductById, ProductServiceClient } from '@shared';
+import {
+  AddProduct,
+  DeleteProduct,
+  ProductById,
+  ProductCount,
+  ProductServiceClient,
+} from '@shared';
 import { Observable, ReplaySubject, Subject, toArray } from 'rxjs';
-import { ProductRepository } from 'packages/apps/global/decorator/customRepository/custom.repository';
 import { Repository } from 'typeorm';
+import { CreateProductDto } from '../../../global/dto/createProduct.dto';
+import { ModificationProductDto } from '../../../global/dto/modification-product.dto';
 
 export class ProductController {
   constructor(
@@ -60,5 +54,37 @@ export class ProductController {
     });
 
     return product$.asObservable();
+  }
+  @GrpcMethod('ProductService')
+  async createProduct(data: CreateProductDto): Promise<Product | Error> {
+    try {
+      const product = this.productRepository.create(data);
+      return await this.productRepository.save(product);
+    } catch (e) {
+      return new Error(e);
+    }
+  }
+  @GrpcMethod('ProductService')
+  async removeProduct(data: ProductById): Promise<DeleteProduct | Error> {
+    try {
+      const product = this.productRepository.findOne({
+        where: { id: data.id },
+      });
+      await this.productRepository.delete(data.id);
+
+      return product;
+    } catch (e) {
+      return new Error(e);
+    }
+  }
+  @GrpcMethod('ProductService')
+  async updateProduct(data: Product): Promise<Product | Error> {
+    try {
+      console.log(data);
+      await this.productRepository.update(data.id, data);
+      return this.productRepository.findOne({ where: { id: data.id } });
+    } catch (e) {
+      return new Error(e);
+    }
   }
 }

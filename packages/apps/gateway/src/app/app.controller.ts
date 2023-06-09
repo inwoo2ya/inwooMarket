@@ -1,28 +1,38 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   OnModuleInit,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import {
+  DeleteProduct,
   Product,
   ProductById,
+  ProductCount,
   ProductServiceClient,
   ProductServiceController,
 } from '@shared';
 import { Observable, ReplaySubject, toArray } from 'rxjs';
 import { ClientGrpc } from '@nestjs/microservices';
-import { RegisterProductCommand } from 'packages/apps/product/src/domain/commands/register-product.command';
+import {
+  ModificationProductCommand,
+  RegisterProductCommand,
+  RemoveProductCommand,
+} from '../cqrs/commands/product.command';
+import { CreateProductDto } from 'packages/apps/global/dto/createProduct.dto';
+import { ModificationProductDto } from 'packages/apps/global/dto/modification-product.dto';
 import { CommandBus } from '@nestjs/cqrs';
 
 @Controller('/')
 export class AppController implements OnModuleInit {
   private productService: ProductServiceClient;
 
-  constructor(
+  public constructor(
     @Inject('PRODUCT_PACKAGE') private client: ClientGrpc,
     private commandBus: CommandBus
   ) {}
@@ -48,17 +58,36 @@ export class AppController implements OnModuleInit {
     return this.productService.findOne({ id });
   }
 
-  @Post()
-  async createProduct(@Body() dto: Product): Promise<void> {
-    const { id, name, count, price } = {
-      id: 4,
-      name: '딸기',
-      count: 5,
-      price: 4000,
-    };
+  @Post('/create')
+  async createProduct(
+    @Body() data: CreateProductDto
+  ): Promise<Product | Error> {
+    const { id, name, count, price } = data;
+    console.log(data);
+    // return new Error();
 
     const command = new RegisterProductCommand(id, name, count, price);
+    return await this.commandBus.execute(command);
 
-    return this.commandBus.execute(command);
+    return new Error();
+  }
+
+  @Delete('/delete/:id')
+  async deleteProduct(@Param('id') id: number): Promise<DeleteProduct> {
+    console.log('delete', id);
+    const command = new RemoveProductCommand(id);
+    return await this.commandBus.execute(command);
+  }
+  @Put('/count/:id')
+  async countUpdate(
+    @Param('id') id: number,
+    @Body() data: ModificationProductDto
+  ): Promise<Product> {
+    const { name, price, count } = data;
+
+    const command = new ModificationProductCommand(+id, name, count, price);
+    console.log(command);
+
+    return await this.commandBus.execute(command);
   }
 }

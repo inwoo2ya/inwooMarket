@@ -1,1 +1,29 @@
-GET http://localhost:3000/1
+POST http://localhost:3000/api/create HTTP/1.1
+Content-Type: application/json; charset=UTF-8
+
+{
+	"id" : 4,
+	"name" : "딸기",
+	"count" : 4,
+	"price" : 4000
+}
+
+###
+
+GET http://localhost:3000/api/4
+
+###
+
+DELETE http://localhost:3000/api/delete/4 HTTP/1.1
+
+
+###
+
+PUT http://localhost:3000/api/count/4 HTTP/1.1
+Content-Type: application/json; charset=UTF-8
+
+{
+	"name":"과자",
+	"count" : 9,
+	"price" : 3000
+}
