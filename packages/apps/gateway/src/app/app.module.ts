@@ -6,6 +6,10 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { RegisterProductHandler } from '../cqrs/commands/handlers/register-product.handler';
 import { RemoveProductHandler } from '../cqrs/commands/handlers/remove-product.handler';
 import { ModificationProductHandler } from '../cqrs/commands/handlers/modification-product.handler';
+import { ProductCommandHandlers } from '../cqrs/commands/handlers';
+import { GetAllProductQueryHandler } from '../cqrs/queries/handler/get-all-products.handler';
+import { GetByIdProductQueryHandler } from '../cqrs/queries/handler/get-by-id-product.handler';
+import { ProductQueryHandlers } from '../cqrs/queries/handler';
 
 @Module({
   imports: [
@@ -23,10 +27,6 @@ import { ModificationProductHandler } from '../cqrs/commands/handlers/modificati
     ]),
   ],
   controllers: [AppController],
-  providers: [
-    RegisterProductHandler,
-    RemoveProductHandler,
-    ModificationProductHandler,
-  ],
+  providers: [...ProductCommandHandlers, ...ProductQueryHandlers],
 })
 export class AppModule {}

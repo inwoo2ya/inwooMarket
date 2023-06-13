@@ -5,27 +5,33 @@ package product;
 service ProductService {
 	rpc CreateProduct (Product) returns (Product) {};
 	rpc FindOne (ProductById) returns (Product) {};
-	rpc UpdateProduct (Product) returns (Product) {};
-	rpc FindMany (stream ProductById) returns (stream Product) {};
+	rpc AddProductCount (AddCount) returns (Product) {};
+	rpc FindMany (ProductEmpty) returns (Product) {};
+	rpc UpdateProduct(Product) returns (Product){};
 	rpc RemoveProduct (ProductById) returns (DeleteProduct) {};
 }
 
 message ProductById {
 	int32 id = 1;
 }
-
+message ProductEmpty{
+	
+}
 message Product {
 	int32 id = 1;
 	string name = 2;
 	int32 count = 3;
 	int32 price = 4;
 }
+message Products {
+	repeated Product products = 1;
+}
 message AddProduct {
 	int32 id = 1;
 	string name =2;
 	int32 price = 3;
 }
-message ProductCount {
+message AddCount {
 	int32 id = 1;
 	int32 count = 3;
 }

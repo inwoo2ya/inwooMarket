@@ -39,3 +39,4 @@ $ npm i ts-proto
 3. ts-proto 설정
 $ npx protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto.cmd --ts_proto_opt=nestJs=true --ts_proto_out=./[프로토파일 경로]
  => .proto 파일 .ts파일로 생성
+예시: npx protoc --plugin=protoc-gen-ts_proto=".\\node_modules\\.bin\\protoc-gen-ts_proto.cmd" --ts_proto_opt=nestJs=true --ts_proto_out=. ./packages/libs/shared/src/global/proto/product.proto  

@@ -16,7 +16,14 @@ export class ModificationProductCommand {
   public constructor(
     public readonly id: number,
     public readonly name: string,
-    public readonly price: number,
+    public readonly count: number,
+    public readonly price: number
+  ) {}
+}
+
+export class AddCountProductCommand {
+  public constructor(
+    public readonly id: number,
     public readonly count: number
   ) {}
 }

@@ -8,11 +8,18 @@ export interface ProductById {
   id: number;
 }
 
+export interface ProductEmpty {
+}
+
 export interface Product {
   id: number;
   name: string;
   count: number;
   price: number;
+}
+
+export interface Products {
+  products: Product[];
 }
 
 export interface AddProduct {
@@ -21,7 +28,7 @@ export interface AddProduct {
   price: number;
 }
 
-export interface ProductCount {
+export interface AddCount {
   id: number;
   count: number;
 }
@@ -38,9 +45,11 @@ export interface ProductServiceClient {
 
   findOne(request: ProductById): Observable<Product>;
 
-  updateProduct(request: Product): Observable<Product>;
+  addProductCount(request: AddCount): Observable<Product>;
 
-  findMany(request: Observable<ProductById>): Observable<Product>;
+  findMany(request: ProductEmpty): Observable<Product>;
+
+  updateProduct(request: Product): Observable<Product>;
 
   removeProduct(request: ProductById): Observable<DeleteProduct>;
 }
@@ -50,21 +59,30 @@ export interface ProductServiceController {
 
   findOne(request: ProductById): Promise<Product> | Observable<Product> | Product;
 
-  updateProduct(request: Product): Promise<Product> | Observable<Product> | Product;
+  addProductCount(request: AddCount): Promise<Product> | Observable<Product> | Product;
 
-  findMany(request: Observable<ProductById>): Observable<Product>;
+  findMany(request: ProductEmpty): Promise<Product> | Observable<Product> | Product;
+
+  updateProduct(request: Product): Promise<Product> | Observable<Product> | Product;
 
   removeProduct(request: ProductById): Promise<DeleteProduct> | Observable<DeleteProduct> | DeleteProduct;
 }
 
 export function ProductServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["createProduct", "findOne", "updateProduct", "removeProduct"];
+    const grpcMethods: string[] = [
+      "createProduct",
+      "findOne",
+      "addProductCount",
+      "findMany",
+      "updateProduct",
+      "removeProduct",
+    ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("ProductService", method)(constructor.prototype[method], method, descriptor);
     }
-    const grpcStreamMethods: string[] = ["findMany"];
+    const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcStreamMethod("ProductService", method)(constructor.prototype[method], method, descriptor);

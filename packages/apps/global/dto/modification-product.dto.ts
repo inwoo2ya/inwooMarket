@@ -2,11 +2,11 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class ModificationProductDto {
   @IsString()
-  name?: string;
+  name: string;
 
   @IsNumber()
-  price?: number;
+  price: number;
 
   @IsNumber()
-  count?: number;
+  count: number;
 }

@@ -13,20 +13,24 @@ import {
   DeleteProduct,
   Product,
   ProductById,
-  ProductCount,
   ProductServiceClient,
   ProductServiceController,
 } from '@shared';
 import { Observable, ReplaySubject, toArray } from 'rxjs';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
+  AddCountProductCommand,
   ModificationProductCommand,
   RegisterProductCommand,
   RemoveProductCommand,
 } from '../cqrs/commands/product.command';
 import { CreateProductDto } from 'packages/apps/global/dto/createProduct.dto';
 import { ModificationProductDto } from 'packages/apps/global/dto/modification-product.dto';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import {
+  GetAllProductQuery,
+  GetByIdProductQuery,
+} from '../cqrs/queries/product.query';
 
 @Controller('/')
 export class AppController implements OnModuleInit {
@@ -34,58 +38,54 @@ export class AppController implements OnModuleInit {
 
   public constructor(
     @Inject('PRODUCT_PACKAGE') private client: ClientGrpc,
-    private commandBus: CommandBus
+    private commandBus: CommandBus,
+    private queryBus: QueryBus
   ) {}
   onModuleInit() {
     this.productService =
       this.client.getService<ProductServiceClient>('ProductService');
   }
   @Get()
-  getManyProduct(): Observable<Product[]> {
-    const ids = new ReplaySubject<ProductById>();
-
-    ids.next({ id: 1 });
-    ids.next({ id: 2 });
-    ids.next({ id: 3 });
-    ids.complete();
-
-    return this.productService.findMany(ids.asObservable()).pipe(toArray());
+  async getManyProduct(): Promise<Product[]> {
+    console.log('findAll');
+    return await this.queryBus.execute(new GetAllProductQuery());
   }
 
   @Get(':id')
-  getProductOne(@Param('id') id: number): Observable<Product> {
+  async getProductOne(@Param('id') id: number): Promise<ProductById> {
     console.log(2, id);
-    return this.productService.findOne({ id });
+    const query = new GetByIdProductQuery(id);
+    return await this.queryBus.execute(query);
   }
 
   @Post('/create')
-  async createProduct(
-    @Body() data: CreateProductDto
-  ): Promise<Product | Error> {
+  async createProduct(@Body() data: CreateProductDto): Promise<Product> {
     const { id, name, count, price } = data;
     console.log(data);
     // return new Error();
 
     const command = new RegisterProductCommand(id, name, count, price);
     return await this.commandBus.execute(command);
-
-    return new Error();
   }
 
   @Delete('/delete/:id')
   async deleteProduct(@Param('id') id: number): Promise<DeleteProduct> {
-    console.log('delete', id);
     const command = new RemoveProductCommand(id);
     return await this.commandBus.execute(command);
   }
-  @Put('/count/:id')
-  async countUpdate(
+  @Put('/update/:id')
+  async updateProduct(
     @Param('id') id: number,
     @Body() data: ModificationProductDto
   ): Promise<Product> {
-    const { name, price, count } = data;
+    const { name, count, price } = data;
+    const command = new ModificationProductCommand(id, name, count, price);
 
-    const command = new ModificationProductCommand(+id, name, count, price);
+    return await this.commandBus.execute(command);
+  }
+  @Put('/count/:id')
+  async countUpdate(@Param('id') id: number, @Body() data): Promise<Product> {
+    const command = new AddCountProductCommand(id, data.count);
     console.log(command);
 
     return await this.commandBus.execute(command);

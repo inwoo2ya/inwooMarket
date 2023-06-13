@@ -2,7 +2,9 @@
   "name": "nx-workspace",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "protoc": "npx protoc --plugin=protoc-gen-ts_proto=.\\node_modules\\.bin\\protoc-gen-ts_proto.cmd --ts_proto_opt=nestJs=true --ts_proto_out=. ./packages/libs/shared/src/global/proto/product.proto "
+  },
   "private": true,
   "devDependencies": {
     "@emotion/babel-plugin": "11.10.6",
