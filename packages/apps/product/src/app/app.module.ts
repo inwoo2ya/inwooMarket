@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ProductController } from './product.controller';
 import { ProductRepository } from 'packages/apps/global/decorator/customRepository/custom.repository';
-import { Product } from 'packages/apps/global/entity/product.entity';
+import { ProductEntity } from 'packages/apps/global/entity/product.entity';
 import { TypeOrmExModule } from 'packages/apps/global/decorator/customRepository/typeOrmEx.module';
 
 @Module({
@@ -15,10 +15,10 @@ import { TypeOrmExModule } from 'packages/apps/global/decorator/customRepository
       username: 'inwoo',
       password: 'n37w0rk',
       database: 'inwoomarket',
-      entities: [Product],
+      entities: [ProductEntity],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Product]),
+    TypeOrmModule.forFeature([ProductEntity]),
     // TypeOrmExModule.forCustomRepository([ProductRepository]),
   ],
   controllers: [ProductController],

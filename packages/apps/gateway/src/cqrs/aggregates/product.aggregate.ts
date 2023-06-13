@@ -2,6 +2,7 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { ProductWasAddedEvent } from '../events/product-was-added.event';
 import { ProductWasRemovedEvent } from '../events/product-was-removed.event';
 import { ProductWasModifiedEvent } from '../events/product-was-modified.event';
+import { ProductWasAddedCountEvent } from '../events/product-was-added-count.event';
 
 export class ProductAggregate extends AggregateRoot {
   constructor(private readonly id: number) {
@@ -27,5 +28,8 @@ export class ProductAggregate extends AggregateRoot {
     count: number
   ) {
     this.apply(new ProductWasModifiedEvent(id, name, count, price));
+  }
+  public AddProductCount(id: number, count: number) {
+    this.apply(new ProductWasAddedCountEvent(id, count));
   }
 }

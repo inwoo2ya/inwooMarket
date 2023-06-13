@@ -1,7 +1,7 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { RegisterProductCommand } from '../product.command';
 import { ProductServiceClient, ProductServiceController } from '@shared';
-import { Product } from 'packages/apps/global/entity/product.entity';
+import { ProductEntity } from 'packages/apps/global/entity/product.entity';
 import { ProductAggregate } from '../../aggregates/product.aggregate';
 import { Inject, Logger } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
@@ -26,13 +26,14 @@ export class RegisterProductHandler
   async execute(command: RegisterProductCommand): Promise<any> {
     try {
       const { id, name, price, count } = command;
-      const productEntity = new Product();
+      const productEntity = new ProductEntity();
       productEntity.id = id;
       productEntity.name = name;
       productEntity.count = count;
       productEntity.price = price;
 
       const product = await this.productService.createProduct(productEntity);
+
       if (product instanceof Error) {
         throw product;
       }
