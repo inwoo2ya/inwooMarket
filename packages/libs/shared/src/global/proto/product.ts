@@ -47,7 +47,7 @@ export interface ProductServiceClient {
 
   addProductCount(request: AddCount): Observable<Product>;
 
-  findMany(request: ProductEmpty): Observable<Product>;
+  findAll(request: ProductEmpty): Observable<Product>;
 
   updateProduct(request: Product): Observable<Product>;
 
@@ -61,7 +61,7 @@ export interface ProductServiceController {
 
   addProductCount(request: AddCount): Promise<Product> | Observable<Product> | Product;
 
-  findMany(request: ProductEmpty): Promise<Product> | Observable<Product> | Product;
+  findAll(request: ProductEmpty): Promise<Product> | Observable<Product> | Product;
 
   updateProduct(request: Product): Promise<Product> | Observable<Product> | Product;
 
@@ -74,7 +74,7 @@ export function ProductServiceControllerMethods() {
       "createProduct",
       "findOne",
       "addProductCount",
-      "findMany",
+      "findAll",
       "updateProduct",
       "removeProduct",
     ];

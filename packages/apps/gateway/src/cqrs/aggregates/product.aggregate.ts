@@ -1,8 +1,10 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { ProductWasAddedEvent } from '../events/product-was-added.event';
-import { ProductWasRemovedEvent } from '../events/product-was-removed.event';
-import { ProductWasModifiedEvent } from '../events/product-was-modified.event';
-import { ProductWasAddedCountEvent } from '../events/product-was-added-count.event';
+import {
+  ProductWasAddedEvent,
+  ProductWasRemovedEvent,
+  ProductWasModifiedEvent,
+  ProductWasAddedCountEvent,
+} from '../events/product-was.event';
 
 export class ProductAggregate extends AggregateRoot {
   constructor(private readonly id: number) {

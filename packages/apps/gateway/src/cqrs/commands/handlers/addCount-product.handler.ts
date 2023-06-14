@@ -27,13 +27,13 @@ export class AddCountProductHandler {
         throw product;
       }
       const productAggregate = this.publisher.mergeObjectContext(
-        await new ProductAggregate(command.id)
+        new ProductAggregate(command.id)
       );
       productAggregate.AddProductCount(id, count);
       productAggregate.commit();
       return product;
     } catch (e) {
-      Logger.error(e, '[CQRS] AddCountProductHandler.execute Error Handler:');
+      Logger.error(e, 'AddCountProductHandler.execute Error Handler: ');
       return e;
     }
   }

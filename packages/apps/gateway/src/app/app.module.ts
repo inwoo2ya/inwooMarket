@@ -7,9 +7,10 @@ import { RegisterProductHandler } from '../cqrs/commands/handlers/register-produ
 import { RemoveProductHandler } from '../cqrs/commands/handlers/remove-product.handler';
 import { ModificationProductHandler } from '../cqrs/commands/handlers/modification-product.handler';
 import { ProductCommandHandlers } from '../cqrs/commands/handlers';
-import { GetAllProductQueryHandler } from '../cqrs/queries/handler/get-all-products.handler';
-import { GetByIdProductQueryHandler } from '../cqrs/queries/handler/get-by-id-product.handler';
-import { ProductQueryHandlers } from '../cqrs/queries/handler';
+import { GetAllProductQueryHandler } from '../cqrs/queries/handlers/get-all-products.handler';
+import { GetByIdProductQueryHandler } from '../cqrs/queries/handlers/get-by-id-product.handler';
+import { ProductQueryHandlers } from '../cqrs/queries/handlers';
+import { ProductEventHandlers } from '../cqrs/events/handlers';
 
 @Module({
   imports: [
@@ -27,6 +28,10 @@ import { ProductQueryHandlers } from '../cqrs/queries/handler';
     ]),
   ],
   controllers: [AppController],
-  providers: [...ProductCommandHandlers, ...ProductQueryHandlers],
+  providers: [
+    ...ProductCommandHandlers,
+    ...ProductQueryHandlers,
+    ...ProductEventHandlers,
+  ],
 })
 export class AppModule {}

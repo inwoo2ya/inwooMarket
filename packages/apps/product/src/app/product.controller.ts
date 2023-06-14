@@ -39,7 +39,7 @@ export class ProductController {
   @GrpcMethod('ProductService')
   async findMany(data: ProductEmpty): Promise<Product[]> {
     console.log('findMany');
-    return await this.productRepository.find();
+    return this.productRepository.find();
   }
 
   @GrpcMethod('ProductService')
