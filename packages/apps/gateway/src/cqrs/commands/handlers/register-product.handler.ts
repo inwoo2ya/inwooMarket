@@ -45,7 +45,7 @@ export class RegisterProductHandler
 
       return product;
     } catch (e) {
-      Logger.error(e, '[CQRS] RegisterProductHandler.execute Error Handler: ');
+      Logger.error(e, 'RegisterProductHandler.execute Error Handler: ');
       return e;
     }
   }

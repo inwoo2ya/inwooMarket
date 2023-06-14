@@ -19,7 +19,7 @@ export class GetAllProductQueryHandler {
 
   public async execute(query: GetAllProductQuery): Promise<any> {
     console.log('Find ALL~~!');
-    const product = await this.productService.findMany(query);
+    const product = await this.productService.findAll(query);
     return product;
   }
 }

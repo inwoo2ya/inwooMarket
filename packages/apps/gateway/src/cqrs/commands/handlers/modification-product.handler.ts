@@ -43,7 +43,7 @@ export class ModificationProductHandler {
 
       return product;
     } catch (e) {
-      Logger.error(e, '[CQRS] UpdateProductHandler.execute Error Handler:');
+      Logger.error(e, 'UpdateProductHandler.execute Error Handler:');
       return e;
     }
   }

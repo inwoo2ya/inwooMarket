@@ -34,7 +34,7 @@ export class RemoveProductHandler {
 
       return product;
     } catch (e) {
-      Logger.error(e, '[CQRS] RemoveProductHandler.execute Error Handler:');
+      Logger.error(e, 'RemoveProductHandler.execute Error Handler:');
       return e;
     }
   }

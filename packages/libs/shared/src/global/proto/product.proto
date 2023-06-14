@@ -6,7 +6,7 @@ service ProductService {
 	rpc CreateProduct (Product) returns (Product) {};
 	rpc FindOne (ProductById) returns (Product) {};
 	rpc AddProductCount (AddCount) returns (Product) {};
-	rpc FindMany (ProductEmpty) returns (Product) {};
+	rpc FindAll (ProductEmpty) returns (Product) {};
 	rpc UpdateProduct(Product) returns (Product){};
 	rpc RemoveProduct (ProductById) returns (DeleteProduct) {};
 }
